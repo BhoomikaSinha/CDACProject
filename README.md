@@ -46,7 +46,7 @@ Application Features:
    - Option will be provided to select the employees and add expenses to selected employees and the amount will be split among the            selected employees
    
 Thanks,
-Balaji
+Bhoomika Sinha
    
   
 
