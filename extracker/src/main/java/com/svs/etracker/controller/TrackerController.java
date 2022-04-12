@@ -95,10 +95,8 @@ public class TrackerController {
 	@RequestMapping(value = "/newTracker", method = RequestMethod.GET)
 	public String newTrackerPage(Model model,HttpServletResponse response) throws IOException {
 		
-		Map<String, Double> pieData = expenseService.getPieData();
-		pieChart.createAndSavePieChart(pieData);
-
-		model.addAttribute("categories", pieData.keySet());
+		List<String> onlyCategories = categoryService.getOnlyCategories();
+		model.addAttribute("categories", onlyCategories);
 		return "newTracker";
 	}
 
@@ -121,7 +119,7 @@ public class TrackerController {
 
         pieChart.createGraphByDate(expenses);
         
-	    String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
+	    //String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
 		writeExcel.writeExcel(expenses, excelFilePath);
 		System.out.println("Excel Report Success!!!!!!");
 
@@ -199,7 +197,7 @@ public class TrackerController {
 			result[i] = Integer.parseInt(expenseIds[i]);
 		}
 		expenseService.deleteExpenses(result);
-		return "redirect:/tracker";
+		return "redirect:/newTracker";
 	}
 
 	@RequestMapping(value = "/deleteExpenseFromDate", method = RequestMethod.POST)
@@ -210,7 +208,7 @@ public class TrackerController {
 		}
 		expenseService.deleteExpenses(result);
 		imageService.deleteUploadImage(result);
-		return "redirect:/tracker";
+		return "redirect:/newTracker";
 	}
 
 	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
@@ -296,6 +294,6 @@ public class TrackerController {
 				image.setExpenseId(expense.getExpenseId());
 				imageService.saveImage(image);
 			}
-			return "redirect:/tracker";
+			return "redirect:/newTracker";
 		}
 	}}

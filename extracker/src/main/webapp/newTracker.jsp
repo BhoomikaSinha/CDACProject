@@ -114,7 +114,7 @@
 				    </table>
 				    <input type="submit" value="Track" class="form-submit-button" value="Track "/>
 					</form>
-					</div>
+				</div>
 					
                 <div class="addExpenseForm">
 					<h3 class="sansserif">Track based on Date</h3>
@@ -127,7 +127,7 @@
 					<input type="submit" class="form-submit-button" value="Track" />
 					
 					</form>
-					</div>
+			 </div>
 					
 				<div class="addExpenseForm">
 			       <h3 class="sansserif">Track based on Category</h3>

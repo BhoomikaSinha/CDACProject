@@ -1,7 +1,9 @@
 package com.svs.etracker.util;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -12,13 +14,24 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Table.Cell;
 import com.svs.etracker.model.UserExpense;
 
 
 @Service
 public class WriteExcel {
+
+	@Value("${rootPath}")
+	private String rootPath;
 
 	private static void createHeaderRow(HSSFSheet sheet) {
 		HSSFCellStyle cellStyle = sheet.getWorkbook().createCellStyle();
@@ -107,12 +120,49 @@ public class WriteExcel {
 
 		HSSFCell cellTotal = rowTotal.createCell(5);
 		cellTotal.setCellValue(total);
+		
+		writeImageOnexcel(workbook,sheet,"/PieChart.png",15,0);
+		writeImageOnexcel(workbook,sheet,"/LineChart.png",18,13);
+
+
 
 		workbook.write(new FileOutputStream(excelFilePath));
 		workbook.close();
 
 	}
 
+	
+	private void writeImageOnexcel(HSSFWorkbook workbook ,HSSFSheet sheet,String imagePath,int row,int cell) throws IOException {
+		 InputStream inputStream = new FileInputStream(rootPath+imagePath);
+		   //Get the contents of an InputStream as a byte[].
+		   byte[] bytes = IOUtils.toByteArray(inputStream);
+		   //Adds a picture to the workbook
+		   int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+		   //close the input stream
+		   inputStream.close();
+		   //Returns an object that handles instantiating concrete classes
+		   CreationHelper helper = workbook.getCreationHelper();
+		   //Creates the top-level drawing patriarch.
+		   Drawing drawing = sheet.createDrawingPatriarch();
+
+		   //Create an anchor that is attached to the worksheet
+		   ClientAnchor anchor = helper.createClientAnchor();
+
+		   //create an anchor with upper left cell _and_ bottom right cell
+		   anchor.setCol1(8); //Column B
+		   anchor.setRow1(cell+4); //Row 3
+		   anchor.setCol2(15); //Column C
+		   anchor.setRow2(cell+15); //Row 4
+
+		   //Creates a picture
+		   Picture pict = drawing.createPicture(anchor, pictureIdx);
+
+		   //Reset the image to the original size
+		   //pict.resize(); //don't do that. Let the anchor resize the image!
+
+		   //Create the Cell B3
+		   HSSFCell cell1 = sheet.createRow(row).createCell(1);
+	}
 
 
 	/*

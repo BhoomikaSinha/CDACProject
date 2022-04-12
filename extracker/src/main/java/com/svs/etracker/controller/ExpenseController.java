@@ -130,7 +130,7 @@ public class ExpenseController {
 			}
 			expenseService.addUserExpense(expense);			
 			model.addAttribute("Saved", "Expense Saved");
-			return "redirect:/expense";
+			return "redirect:/dashboard";
 		}
 	}
 }

@@ -17,9 +17,6 @@ public interface UserExpenseRepository extends CrudRepository<UserExpense, Integ
 	@Query("SELECT e.userCategory, SUM(e.amount) FROM UserExpense e WHERE e.user = :user GROUP BY e.userCategory")
 	public List<Object[]> getPieData(@Param("user")User user);
 	
-	@Query("SELECT e.userCategory, SUM(e.amount) FROM UserExpense e WHERE e.user = :user AND e.createdDate BETWEEN :fromDate AND :tillDate GROUP BY e.userCategory")
-	public List<Object[]> getPieDataByDate(@Param("user")User user, @Param("fromDate") Date fromDate, @Param("tillDate") Date tillDate);
-	
 	@Query("FROM UserExpense e WHERE e.user = :user AND e.createdDate BETWEEN :fromDate AND :tillDate")
 	public List<UserExpense> getExpenseByDate(@Param("user")User user, @Param("fromDate") Date fromDate, @Param("tillDate") Date tillDate);
 	
