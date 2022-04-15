@@ -94,8 +94,29 @@
                     <img src="${contextPath}/resources/img/bhoomika.jpg" width="50" height="60">
                 </div>
             </div>
+ 
+ <!-- --------------------------------------------- -->
+              <div class="details"> 
+             
+			      
+			      <div class="addExpenseForm">
+
+						<h3 class="sansserif">Add New Employee</h3>
+						<form action="/addEmployee" method="post">
+							<table>
+								<tr><td>Full Name : </td> <td> <input type="text" name="firstName"/></td> </tr>
+		
+								<tr><td>Phone Number : </td> <td> <input type="text" name="phoneNumber" /></td> </tr>
+								<tr><td>Email ID : </td> <td> <input type="text" name="emailId" /></td> </tr>
+								
+							</table>
+							<input class="form-submit-button" type="submit" value="Add Employee" />
+						</form>
+			      </div>
+			 </div>
+  <!-- --------------------------------------------- -->
             
-            <!-- Specific  Section -->
+            <!-- Specific  Section 
              <div class="details"> 
              
 			      
@@ -127,25 +148,30 @@
 					<input type="submit" class="form-submit-button" value="Track" />
 					
 					</form>
-		       </div>
-		       
-		   <div class="addExpenseForm">
-					<h3 class="sansserif">Yearly Analytics</h3>
+					</div>
 					
-					<form action="/yearlyAnalytics" method="post">
+				<div class="addExpenseForm">
+			       <h3 class="sansserif">Track based on Category</h3>
+					<form action="/categoryTracker" method="post">
 					<table>
-											<tr><td>Select Year : </td>  <td>	<select name="year">
-						 											 <c:forEach items="${years}" var="year">
-						  												  <option value="${year}">
-						     													   ${year}
-						    											  </option>
-						 											 </c:forEach>
-																</select>     </td> </tr>
+					<tr><td>Select Category : </td><td><select name="trackCategory">
+					 											 <c:forEach items="${categories}" var="databaseValue">
+					  												  <option value="${databaseValue}">
+					     													   ${databaseValue}
+					    											  </option>
+					 											 </c:forEach>
+															</select></td></tr>
 					</table>
-					<input type="submit" class="form-submit-button" value="Show" />
-					
-			         </form>
-			  </div>
+					  <input type="submit" class="form-submit-button" value="Track" />
+					</form>
+			   </div>
+
+			</div>
+			
+
+
+
+			
 
            <!-- Specific Section End -->  
     

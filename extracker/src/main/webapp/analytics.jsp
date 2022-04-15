@@ -100,36 +100,28 @@
              
 			      
 			      <div class="addExpenseForm">
-				      <h3 class="sansserif">Track based on Date and Category</h3>
-						<form action="/dateAndCategoryTracker" method="post">
+				      <h3 class="sansserif">Yearly Analytics</h3>
+						<form action="/monthlyAnalytics" method="post">
 						<table>
-						<tr><td>From Date : </td>  <td>	<input type="date" name="fromDate" />   </td> </tr>
-						<tr><td>Till Date : </td>  <td>	<input type="date" name="tillDate" />   </td> </tr>
-						<tr><td>Select Category : </td>  <td>	<select name="trackCategory">
-						 											 <c:forEach items="${categories}" var="databaseValue">
-						  												  <option value="${databaseValue}">
-						     													   ${databaseValue}
+						<tr><td>Select Year : </td>  <td>	<select name="year">
+						 											 <c:forEach items="${years}" var="year">
+						  												  <option value="${year}">
+						     													   ${year}
 						    											  </option>
 						 											 </c:forEach>
 																</select>     </td> </tr>
+						<tr><td>Select Month : </td>  <td>	<select name="month">
+						 											 <c:forEach items="${months}" var="month">
+						  												  <option value="${month}">
+						     													   ${month}
+						    											  </option>
+						 											 </c:forEach>
+																</select>     </td> </tr>										
 					    </table>
-					    <input type="submit" value="Track" class="form-submit-button" value="Track "/>
-						</form>
+					    <input type="submit" value="Show" class="form-submit-button"/>
+					 </form>
 			      </div>
                 <div class="addExpenseForm">
-					<h3 class="sansserif">Track based on Date</h3>
-					
-					<form action="/dateTracker" method="post">
-					<table>
-					<tr><td>From Date : </td>  <td>	<input type="date" name="fromDate" />   </td> </tr>
-					<tr><td>Till Date : </td>  <td>	<input type="date" name="tillDate" />   </td> </tr>
-					</table>
-					<input type="submit" class="form-submit-button" value="Track" />
-					
-					</form>
-		       </div>
-		       
-		   <div class="addExpenseForm">
 					<h3 class="sansserif">Yearly Analytics</h3>
 					
 					<form action="/yearlyAnalytics" method="post">
