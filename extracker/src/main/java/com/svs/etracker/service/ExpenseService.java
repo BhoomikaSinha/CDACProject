@@ -1,5 +1,6 @@
 package com.svs.etracker.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,9 @@ public class ExpenseService {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private UserCategoryRepository userCategoryRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -74,6 +78,21 @@ public class ExpenseService {
 		return pieData;
 	}
 	
+	public List<UserExpense> getByYear(int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.DAY_OF_YEAR, 0); 
+		Date fromDate = cal.getTime();
+		
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, 11);
+		cal.set(Calendar.DAY_OF_MONTH, 31); // new years eve
+
+		Date tillDate = cal.getTime();
+		
+		return userExpenseRepository.getExpenseByDate(userService.getCurrentUser(), fromDate, tillDate);
+	}
+	
 	public List<UserExpense> getBydate(Date fromDate, Date tillDate) {
 		return userExpenseRepository.getExpenseByDate(userService.getCurrentUser(), fromDate, tillDate);
 	}
@@ -82,14 +101,12 @@ public class ExpenseService {
 		return userExpenseRepository.getAllExpenses(userService.getCurrentUser());
 	}
 
-	public List<Object[]> getbyCategory(String category) {
-		int categoryId = categoryRepository.getIdForCategory(category);		
-		return expenseRepository.getExpenseByCategory(categoryId);
-
+	public List<UserExpense> getbyCategory(UserCategory category) {
+		return userExpenseRepository.getExpenseByCategory(userService.getCurrentUser(), category);
 	}
-	public List<Object[]> getByCategoryAndDate(Date fromDate, Date tillDate, String category){
-		int categoryId = categoryRepository.getIdForCategory(category);
-		return expenseRepository.getExpenseByCategoryAndDate(fromDate, tillDate, categoryId);
+	public List<UserExpense> getByCategoryAndDate(Date fromDate, Date tillDate, String category){
+		UserCategory userCategory = userCategoryRepository.getCategoryForUserByName(userService.getCurrentUser(), category);
+		return userExpenseRepository.getExpenseByDateAndCategory(userService.getCurrentUser(), fromDate, tillDate, userCategory);
 	}
 
 	public UserExpense getExpenseById(int expenseId){

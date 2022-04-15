@@ -42,9 +42,6 @@ public class EmployeeController {
 	private ExcelToCsv exceltocsv;
 
 	@Autowired
-	private EmailSender emailSender;
-
-	@Autowired
 	private WriteExcel writeExcel;
 
 	@Autowired
@@ -224,27 +221,6 @@ public class EmployeeController {
 		}
 		employeeExpenseService.deleteExpenses(result);
 		return "redirect:/trackEmployee";
-	}
-
-	@SuppressWarnings("finally")
-	@RequestMapping(value = "/sendEmail" , method = RequestMethod.POST)
-	public String sendMail(@RequestParam("email") String mailTo){
-
-		String message = "Please Download the attachment";
-		try {
-			emailSender.sendEmailWithAttachments(mailTo,
-					"SVS Expense Sheet", message);
-			System.out.println("Email sent.");
-
-		} catch (Exception ex) {
-			System.out.println("Could not send email.");
-			ex.printStackTrace();
-
-		}
-
-		finally{
-			return "redirect:/trackEmployee";
-		}
 	}
 
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
