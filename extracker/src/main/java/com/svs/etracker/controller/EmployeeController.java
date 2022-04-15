@@ -79,10 +79,11 @@ public class EmployeeController {
 	public String trackEMployee(Model model){
 
 		empNames =  employeeService.getFullName();
-
 		model.addAttribute("employees", empNames);
+		
 		List<String> categories = categoryService.getOnlyCategories();
 		model.addAttribute("categories", categories);
+		
 		String addressAddEmployee = address+"addEmployee";
 		model.addAttribute("addEmployee", addressAddEmployee);
 		String addEmployeeUrl = address+"addEmployee";

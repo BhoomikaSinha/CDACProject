@@ -59,13 +59,22 @@ public class ExpenseService {
 	}
 	
 	public Map<String, Double> getPieDataByDate(Date fromDate, Date tillDate){
-		List<Object[]> dbData = userExpenseRepository.getPieDataByDate(userService.getCurrentUser(), fromDate, tillDate);
+		 List<UserExpense> expenseByDate = userExpenseRepository.getExpenseByDate(userService.getCurrentUser(), fromDate, tillDate);
+		 
 		Map<String, Double> pieData = new HashMap<String, Double>();
-		for(Object[] data : dbData ) {
-			UserCategory category = (UserCategory)data[0];
-			Double amount = (Double)data[1];
-			pieData.put(category.getCategory(), amount);
+		
+		for(UserExpense expense : expenseByDate ) {
+			
+			String category = expense.getUserCategory().getCategory();
+			if(pieData.containsKey(category)) {
+				Double amt = pieData.get(category);
+				amt = amt + expense.getAmount();
+				pieData.put(category, amt);
+			}else {
+				pieData.put(category,  expense.getAmount());
+			}
 		}
+		
 		return pieData;
 	}
 	

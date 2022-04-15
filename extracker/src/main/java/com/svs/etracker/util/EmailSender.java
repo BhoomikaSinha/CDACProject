@@ -100,31 +100,32 @@ public class EmailSender {
 	/**
 	 * Test sending e-mail with attachments
 	 */
-	/*public static void main(String[] args) {
-		// SMTP info
-		String host = "smtp.gmail.com";
-		String port = "587";
-		String mailFrom = "your-email-address";
-		String password = "your-email-password";
-
-		// message info
-		String mailTo = "your-friend-email";
-		String subject = "New email with attachments";
-		String message = "I have some attachments for you.";
-
-		// attachments
-		String[] attachFiles = new String[3];
-		attachFiles[0] = "e:/Test/Picture.png";
-		attachFiles[1] = "e:/Test/Music.mp3";
-		attachFiles[2] = "e:/Test/Video.mp4";
-
-		try {
-			sendEmailWithAttachments(mailTo,
-					subject, message);
-			System.out.println("Email sent.");
-		} catch (Exception ex) {
-			System.out.println("Could not send email.");
-			ex.printStackTrace();
-		}*/
+//	public static void main(String[] args) {
+//		// SMTP info
+//		String host = "smtp.gmail.com";
+//		String port = "587";
+//		String mailFrom = "cdacexpense2021@gmail.com";
+//		String password = "Expense*2021";
+//
+//		// message info
+//		String mailTo = "movieking504@gmail.com";
+//		String subject = "New email with attachments";
+//		String message = "I have some attachments for you.";
+//
+//		// attachments
+//		String[] attachFiles = new String[3];
+//		attachFiles[0] = "e:/Test/Picture.png";
+//		attachFiles[1] = "e:/Test/Music.mp3";
+//		attachFiles[2] = "e:/Test/Video.mp4";
+//
+//		try {
+//			new EmailSender().sendEmailWithAttachments(mailTo,
+//					subject, message);
+//			System.out.println("Email sent.");
+//		} catch (Exception ex) {
+//			System.out.println("Could not send email.");
+//			ex.printStackTrace();
+//		}
+//	}
 }
 

@@ -100,6 +100,7 @@
              
 			      
 			      <div class="addExpenseForm">
+
 				      <h3 class="sansserif">Track based on Date and Category</h3>
 						<form action="/dateAndCategoryTracker" method="post">
 						<table>
@@ -116,6 +117,7 @@
 					    <input type="submit" value="Track" class="form-submit-button" value="Track "/>
 						</form>
 			      </div>
+
                 <div class="addExpenseForm">
 					<h3 class="sansserif">Track based on Date</h3>
 					
@@ -127,10 +129,12 @@
 					<input type="submit" class="form-submit-button" value="Track" />
 					
 					</form>
+
 		       </div>
 		       
-		   <div class="addExpenseForm">
+		    <div class="addExpenseForm">
 					<h3 class="sansserif">Yearly Analytics</h3>
+		    
 					
 					<form action="/yearlyAnalytics" method="post">
 					<table>
@@ -146,10 +150,11 @@
 					
 			         </form>
 			  </div>
+			   </div>
 
            <!-- Specific Section End -->  
     
-        </div>
+       
     </div>
 
    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
