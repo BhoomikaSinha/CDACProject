@@ -42,15 +42,15 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/trackEmployee">
                     <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                    <span class="title">Message</span>
+                    <span class="title">Employee Management</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/newTracker">
                     <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                    <span class="title">Help</span>
+                    <span class="title">Track Expense</span>
                 </a>
             </li>
             <li>
