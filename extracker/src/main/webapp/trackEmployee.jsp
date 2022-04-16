@@ -11,8 +11,6 @@
     <meta name="viewport" content="width=device-width,  initial-scale=1.0">
     <title>Expense Manager Dashboard</title>
     <link rel="stylesheet"  type="text/css" href="${contextPath}/resources/css/dashboard.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </head>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -44,21 +42,21 @@
                 </a>
             </li>
             <li>
-                <a href="${viewPage}">
+                <a href="${address}">
                     <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                    <span class="title">Track Employee Expense </span>
+                    <span class="title">Add New Employee</span>
+                </a>
+            </li>
+            <li>
+                <a href="${viewPage}">
+                    <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                    <span class="title">Track Employee Expense</span>
                 </a>
             </li>
             <li>
                 <a href="${group}">
-                    <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                    <span class="title">Add Expense To Group Of Employees</span>
-                </a>
-            </li>
-            <li>
-                <a href="${address}">
                     <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
-                    <span class="title">Add new Employee</span>
+                    <span class="title">Expense To GroupEmployees</span>
                 </a>
             </li>
             <li>
@@ -96,57 +94,42 @@
             </div>
  
             <!-- Specific  Section -->   
-
-
-	
-
-	
-	
-	 <div class="details"> 
-	 
-	                 <div class="cardHeader">
-                        <h2>Add Employee Expense</h2>
+            <div class="details"> 
+                    <div class="cardHeader">
+                        <h2>Track Employee Expense</h2>
                     </div>
-                    
-                     <div class="addExpenseForm">
-                     <form action="/employeeExpenseSubmission" method="post">
-							<table>
-									<tr><td>Expense Name : </td> <td><input type="text" name="expenseName"/></td> </tr>
-									<tr><td>Amount : </td> <td> <input type="text" name="amount" /></td> </tr>
-									<tr><td>Date : </td>  <td> <input type="date" name="createdDate" />   </td> </tr>
-									<tr><td>Comment : </td>  <td><input type="text" name="comments" />      </td> </tr>
-									
-									<tr><td>Employee : </td> <td><select name="employee">
-							 											 <c:forEach items="${employees}" var="databaseValue">
-							  												  <option value="${databaseValue}">
-							     													   ${databaseValue}
-							    											  </option>
-							 											 </c:forEach>
-																	</select>
-									  </td></tr>
-									
-									<tr><td>Category : </td> <td><select name="category">
-							 											 <c:forEach items="${categories}" var="databaseValue">
-							  												  <option value="${databaseValue}">
-							     													   ${databaseValue}
-							    											  </option>
-							 											 </c:forEach>
-																	</select>
-																	</td>
-																	
-							</tr>
-									
-									
-								</table>
-								<input type="submit" value="Submit" class="form-submit-button"/>
-	                  </form>
-                     
-                     </div>
-                    
-                    
-	 </div>
+                <div class="addExpenseForm">
+				   <form action="/employeeExpenseSubmission" method="post">
+<table>
+		<tr><td>Expense Name :   		</td>  <td>       <input type="text" name="expenseName"/>    </td> </tr>
+		<tr><td>Amount :  				</td>  <td>       <input type="text" name="amount" /> 		 </td> </tr>
+		<tr><td>Date : 					</td>  <td>       <input type="date" name="createdDate" />   </td> </tr>
+		<tr><td>Comment :    	    	</td>  <td>       <input type="text" name="comments" />      </td> </tr>
+		
+		<tr><td>Employee :   		</td><td>	<select name="employee">
+ 											 <c:forEach items="${employees}" var="databaseValue">
+  												  <option value="${databaseValue}">
+     													   ${databaseValue}
+    											  </option>
+ 											 </c:forEach>
+										</select></td></tr>
+		
+		<tr><td>Category :   			</td><td><select name="category">
+ 											 <c:forEach items="${categories}" var="databaseValue">
+  												  <option value="${databaseValue}">
+     													   ${databaseValue}
+    											  </option>
+ 											 </c:forEach>
+										</select></td></tr>
+										
+										
+		
+		<tr><td><input type="submit" value="Submit" /></td></tr>
+	</table>
+	</form>
 
-
+                </div>
+           </div>
 
            <!-- Specific Section End -->  
     
