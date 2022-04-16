@@ -11,8 +11,76 @@
     <meta name="viewport" content="width=device-width,  initial-scale=1.0">
     <title>Expense Manager Dashboard</title>
     <link rel="stylesheet"  type="text/css" href="${contextPath}/resources/css/dashboard.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+    
+    <style type="text/css">
+
+.pic{
+	height="40";
+	width="40";
+	
+}
+
+.picbig{
+	
+	position:absolute;
+	width:0px;
+	-webkit-transition:width:0.3s linear 0s;
+	transition:width:0.3s linear 0s;
+	 -moz-transition: background 0.3s linear; /* Firefox 4 */
+    -webkit-transition: background 0.3s linear; /* Safari and Chrome */
+    -o-transition: background 0.3s linear; /* Opera */
+    -ms-transition: background 0.3s linear; /* Explorer 10 */
+	z-index:10;
+}
+
+.pic:hover+ .picbig, .pic:active+ .picbig{
+	left:600px;
+	width:500px;
+	height:400px;
+}
+h1.sansserif {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h2.sansserif {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h3.sansserif {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h4.sansserif {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #1E90FF;
+	color: white;
+}
+</style>
 </head>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -94,67 +162,43 @@
                     <img src="${contextPath}/resources/img/bhoomika.jpg" width="50" height="60">
                 </div>
             </div>
-            
-            <!-- Specific  Section -->
-             <div class="details"> 
-             
-			      
-			      <div class="addExpenseForm">
-
-				      <h3 class="sansserif">Track based on Date and Category</h3>
-						<form action="/dateAndCategoryTracker" method="post">
-						<table>
-						<tr><td>From Date : </td>  <td>	<input type="date" name="fromDate" />   </td> </tr>
-						<tr><td>Till Date : </td>  <td>	<input type="date" name="tillDate" />   </td> </tr>
-						<tr><td>Select Category : </td>  <td>	<select name="trackCategory">
-						 											 <c:forEach items="${categories}" var="databaseValue">
-						  												  <option value="${databaseValue}">
-						     													   ${databaseValue}
-						    											  </option>
-						 											 </c:forEach>
-																</select>     </td> </tr>
-					    </table>
-					    <input type="submit" value="Track" class="form-submit-button" value="Track "/>
-						</form>
-			      </div>
-
-                <div class="addExpenseForm">
-					<h3 class="sansserif">Track based on Date</h3>
-					
-					<form action="/dateTracker" method="post">
-					<table>
-					<tr><td>From Date : </td>  <td>	<input type="date" name="fromDate" />   </td> </tr>
-					<tr><td>Till Date : </td>  <td>	<input type="date" name="tillDate" />   </td> </tr>
-					</table>
-					<input type="submit" class="form-submit-button" value="Track" />
-					
-					</form>
-
-		       </div>
-		       
-		    <div class="addExpenseForm">
-					<h3 class="sansserif">Yearly Analytics</h3>
-		    
-					
-					<form action="/yearlyAnalytics" method="post">
-					<table>
-											<tr><td>Select Year : </td>  <td>	<select name="year">
-						 											 <c:forEach items="${years}" var="year">
-						  												  <option value="${year}">
-						     													   ${year}
-						    											  </option>
-						 											 </c:forEach>
-																</select>     </td> </tr>
-					</table>
-					<input type="submit" class="form-submit-button" value="Show" />
-					
-			         </form>
-			  </div>
-			   </div>
+ 
+            <!-- Specific  Section -->   
+            <div class="details"> 
+                       <table>
+                        <tr> 
+                        <td align="right">
+						<form action="/sendEmail" method="post">
+						       Email ID : <input type="text" name="email" /><input type="submit" value=" Send Email" />
+						 </form>
+						</td>
+						<td align="right"><a  href="/downloadExcel">Download Excel Document </a> <br> </td>
+                         </tr>
+                        </table>
+                        <table><tr>
+                        
+                        <td  align="left"><div><img src="/pieChart" title = "PieChart"  height="315" width="100%"/></div></td>
+                        <td align="right"><div ><img src="/barChart" title = "LineChart"  height="315" width="100%"/></div></td>
+                        </tr>
+                        
+                        </table>
+						<table><tr>
+                        
+                        <td  align="left"><div><img src="/monthlyCategoryBarChart" title = "PieChart"  height="315" width="100%"/></div></td>
+                        </tr>
+                        
+                        </table>
+						<table><tr>
+                        
+                        <td  align="left"><div><img src="/lineChart" title = "PieChart"  height="315" width="100%"/></div></td>
+                        </tr>
+                        
+                        </table>
+           </div>
 
            <!-- Specific Section End -->  
     
-       
+        </div>
     </div>
 
    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
