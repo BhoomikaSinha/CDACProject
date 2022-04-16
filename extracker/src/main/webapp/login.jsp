@@ -20,7 +20,6 @@
       <div class="forms-container">
         <div class="signin-signup">
         
-        
           <form method="POST" action="${contextPath}/login" class="sign-in-form">
             <h2 class="title">Sign in</h2>
   
@@ -54,19 +53,19 @@
           </form>
           
           
-          <form action="${contextPath}/registration" method="POST" class="sign-up-form">
+          <form name="regForm" action="${contextPath}/registration" method="POST" onsubmit="return validateForm()" class="sign-up-form">
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input name="username" type="text" placeholder="Username" />
+              <input name="username" type="text" placeholder="Username" minlength="7" maxlength="32" title="Must contain minimum lenght 7 " required/>
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input name="password" type="password" placeholder="Password" />
+              <input name="password" type="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" maxlength="32" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input name="passwordConfirm" type="password" placeholder="Confirm Password" />
+              <input name="passwordConfirm" type="password" placeholder="Confirm Password" required/>
             </div>
             <input type="submit" class="btn" value="Sign up" />
             <p class="social-text">Or Sign up with social platforms</p>
@@ -93,8 +92,7 @@
           <div class="content">
             <h3>New here ?</h3>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
+              Let's Go Sign Up !!!
             </p>
             <button class="btn transparent" id="sign-up-btn">
               Sign up
@@ -106,8 +104,7 @@
           <div class="content">
             <h3>One of us ?</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
+             You can Login In !!!
             </p>
             <button class="btn transparent" id="sign-in-btn">
               Sign in
