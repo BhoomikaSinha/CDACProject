@@ -54,9 +54,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/book">
                     <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
-                    <span class="title">Settings</span>
+                    <span class="title">Category</span>
                 </a>
             </li>
             <li>
