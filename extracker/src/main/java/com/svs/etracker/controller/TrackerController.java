@@ -51,7 +51,7 @@ import com.svs.etracker.util.WriteExcel;
 
 @Controller
 public class TrackerController {
-	
+
 	@Autowired
 	private EmailSender emailSender;
 
@@ -73,10 +73,8 @@ public class TrackerController {
 	@Value("${excelFilePath}")
 	private String excelFilePath;
 
-
 	@Value("${rootPath}")
 	private String rootPath;
-
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -89,24 +87,23 @@ public class TrackerController {
 	}
 
 	@RequestMapping(value = "/tracker", method = RequestMethod.GET)
-	public String trackerPage(Model model,HttpServletResponse response) throws IOException {
-		
+	public String trackerPage(Model model, HttpServletResponse response) throws IOException {
+
 		Map<String, Double> pieData = expenseService.getPieData();
 		pieChart.createAndSavePieChart(pieData);
 
 		model.addAttribute("categories", pieData.keySet());
 		return "tracker";
 	}
-	
+
 	@RequestMapping(value = "/newTracker", method = RequestMethod.GET)
-	public String newTrackerPage(Model model,HttpServletResponse response) throws IOException {
-		
+	public String newTrackerPage(Model model, HttpServletResponse response) throws IOException {
 
 		Map<String, Double> pieData = expenseService.getPieData();
 		pieChart.createAndSavePieChart(pieData);
-		
-		List<String> years= new ArrayList<String>();
-		for(int i = 2000; i<= 2050 ; i++) {
+
+		List<String> years = new ArrayList<String>();
+		for (int i = 2000; i <= 2050; i++) {
 			years.add(new Integer(i).toString());
 		}
 
@@ -118,12 +115,12 @@ public class TrackerController {
 		model.addAttribute("categories", onlyCategories);
 		return "newTracker";
 	}
-	
+
 	@RequestMapping(value = "/analytics", method = RequestMethod.GET)
-	public String analytics(Model model,HttpServletResponse response) throws IOException {
-		
-		List<String> years= new ArrayList<String>();
-		for(int i = 2000; i<= 2050 ; i++) {
+	public String analytics(Model model, HttpServletResponse response) throws IOException {
+
+		List<String> years = new ArrayList<String>();
+		for (int i = 2000; i <= 2050; i++) {
 			years.add(new Integer(i).toString());
 		}
 
@@ -131,7 +128,7 @@ public class TrackerController {
 		model.addAttribute("months", Month.values());
 		return "analytics";
 	}
-	
+
 	@RequestMapping(value = "/yearlyAnalytics", method = RequestMethod.POST)
 	public String yearlyAnalytics(Model model, @RequestParam("year") String year) throws IOException {
 		
@@ -141,32 +138,35 @@ public class TrackerController {
 		pieChart.createBarChartByMonthCategory(expenses);
 		pieChart.createGraphByMonthlyCategory(expenses);
 	
+		
+		writeExcel.writeYearAnalyticsChartOnExcel(excelFilePath);
 		return "yearlyAnalytics";
 	}
 
 	@RequestMapping(value = "/dateTracker", method = RequestMethod.POST)
 	public String trackViaDate(Model model, @RequestParam("fromDate") String fromDate,
-			@RequestParam("tillDate") String tillDate, HttpServletResponse response) throws ParseException, IOException {
+			@RequestParam("tillDate") String tillDate, HttpServletResponse response)
+			throws ParseException, IOException {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date fDate = format.parse(fromDate);
 		Date tDate = format.parse(tillDate);
-			
-        Map<String, Double> pieData = expenseService.getPieDataByDate(fDate, tDate);
-        pieChart.createAndSavePieChart(pieData);
 
-        double total = 0;
-        List<UserExpense> expenses = expenseService.getBydate(fDate, tDate);
-        for(UserExpense expense : expenses) {
-        	total = total+expense.getAmount();
-        }
+		Map<String, Double> pieData = expenseService.getPieDataByDate(fDate, tDate);
+		pieChart.createAndSavePieChart(pieData);
 
-        pieChart.createGraphByDate(expenses);
-        
-	    //String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
+		double total = 0;
+		List<UserExpense> expenses = expenseService.getBydate(fDate, tDate);
+		for (UserExpense expense : expenses) {
+			total = total + expense.getAmount();
+		}
+
+		pieChart.createGraphByDate(expenses);
+
+		// String excelFilePath =
+		// "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
 		writeExcel.writeExcel(expenses, excelFilePath);
 		System.out.println("Excel Report Success!!!!!!");
-
 
 		model.addAttribute("total", total);
 		model.addAttribute("from", fDate);
@@ -174,11 +174,11 @@ public class TrackerController {
 		model.addAttribute("expense", expenses);
 		return "newDataFromDate";
 	}
-	
+
 	@RequestMapping(value = "/allExpense", method = RequestMethod.GET)
 	public String allExpense(Model model) throws ParseException, IOException {
-		
-        List<UserExpense> expenses = expenseService.getAllExpenses();
+
+		List<UserExpense> expenses = expenseService.getAllExpenses();
 		model.addAttribute("expenses", expenses);
 		return "allExpense";
 	}
@@ -186,26 +186,25 @@ public class TrackerController {
 	@RequestMapping(value = "/dateAndCategoryTracker", method = RequestMethod.POST)
 	public String trackViaDateAndCategory(Model model, @RequestParam("trackCategory") String category,
 			@RequestParam("fromDate") String fromDate, @RequestParam("tillDate") String tillDate)
-					throws ParseException, IOException {
+			throws ParseException, IOException {
 		double total = 0;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date fDate = format.parse(fromDate);
 		Date tDate = format.parse(tillDate);
-		
+
 		List<UserExpense> userExpenses = expenseService.getByCategoryAndDate(fDate, tDate, category);
-		
-		for (int i=0; i<userExpenses.size(); i++){
-			total = total +userExpenses.get(i).getAmount();
+
+		for (int i = 0; i < userExpenses.size(); i++) {
+			total = total + userExpenses.get(i).getAmount();
 		}
-		
-        pieChart.createGraphByDate(userExpenses);
-        Map<String, Double> pieData = expenseService.getPieDataByDate(fDate, tDate);
-        pieChart.createAndSavePieChart(pieData);
-        
-	    String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
+
+		pieChart.createGraphByDate(userExpenses);
+		Map<String, Double> pieData = expenseService.getPieDataByDate(fDate, tDate);
+		pieChart.createAndSavePieChart(pieData);
+
+		String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
 		writeExcel.writeExcel(userExpenses, excelFilePath);
 		System.out.println("Excel Report Success!!!!!!");
-
 
 		model.addAttribute("total", total);
 		model.addAttribute("from", fDate);
@@ -253,38 +252,38 @@ public class TrackerController {
 	}
 
 	@RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
-	public void showImage(@RequestParam("id") Integer expenseId, HttpServletResponse response,HttpServletRequest request)
-			throws ServletException, IOException{
+	public void showImage(@RequestParam("id") Integer expenseId, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException, IOException {
 
-        UserExpense expense = expenseService.getExpenseById(expenseId);
+		UserExpense expense = expenseService.getExpenseById(expenseId);
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 		response.getOutputStream().write(expense.getImage());
 		response.getOutputStream().close();
 	}
 
 	@RequestMapping(value = "/pieChart", method = RequestMethod.GET)
-	public void showPieChart(HttpServletResponse response)throws ServletException, IOException{
-		File file = new File(rootPath+"/PieChart.png");
+	public void showPieChart(HttpServletResponse response) throws ServletException, IOException {
+		File file = new File(rootPath + "/PieChart.png");
 		response.setContentType("image/png");
 		BufferedImage bi = ImageIO.read(file);
 		OutputStream out = response.getOutputStream();
 		ImageIO.write(bi, "png", out);
 		out.close();
 	}
-	
+
 	@RequestMapping(value = "/lineChart", method = RequestMethod.GET)
-	public void showLineChart(HttpServletResponse response)throws ServletException, IOException{
-		File file = new File(rootPath+"/lineChart.png");
+	public void showLineChart(HttpServletResponse response) throws ServletException, IOException {
+		File file = new File(rootPath + "/lineChart.png");
 		response.setContentType("image/png");
 		BufferedImage bi = ImageIO.read(file);
 		OutputStream out = response.getOutputStream();
 		ImageIO.write(bi, "png", out);
 		out.close();
 	}
-	
+
 	@RequestMapping(value = "/barChart", method = RequestMethod.GET)
-	public void showBarChart(HttpServletResponse response)throws ServletException, IOException{
-		File file = new File(rootPath+"/BarChart.png");
+	public void showBarChart(HttpServletResponse response) throws ServletException, IOException {
+		File file = new File(rootPath + "/BarChart.png");
 		response.setContentType("image/png");
 		BufferedImage bi = ImageIO.read(file);
 		OutputStream out = response.getOutputStream();
@@ -293,8 +292,8 @@ public class TrackerController {
 	}
 
 	@RequestMapping(value = "/monthlyCategoryBarChart", method = RequestMethod.GET)
-	public void showMonthlyCategoryBarChart(HttpServletResponse response)throws ServletException, IOException{
-		File file = new File(rootPath+"/MonthlyCategoryBarChart.png");
+	public void showMonthlyCategoryBarChart(HttpServletResponse response) throws ServletException, IOException {
+		File file = new File(rootPath + "/MonthlyCategoryBarChart.png");
 		response.setContentType("image/png");
 		BufferedImage bi = ImageIO.read(file);
 		OutputStream out = response.getOutputStream();
@@ -311,26 +310,26 @@ public class TrackerController {
 		model.addAttribute("expense", expense);
 		model.addAttribute("categories", categories);
 		model.addAttribute("StringCategory", category.getCategory());
-		model.addAttribute("onlyImage",expense.getImage());
+		model.addAttribute("onlyImage", expense.getImage());
 
 		return "edit";
 	}
 
 	@RequestMapping(value = "/UpdateExpenseSubmission/{expenseId}", method = RequestMethod.POST)
 	public String UpdateExpenseController(@PathVariable("expenseId") String expId, Model model,
-			@ModelAttribute Expense expense, @RequestParam("category") String category,
-			BindingResult result, @RequestParam(value = "image", required=false) MultipartFile file) throws IOException {
+			@ModelAttribute Expense expense, @RequestParam("category") String category, BindingResult result,
+			@RequestParam(value = "image", required = false) MultipartFile file) throws IOException {
 
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			int expenseId = Integer.parseInt(expId);
-			return "redirect:/edit/"+expenseId;
+			return "redirect:/edit/" + expenseId;
 		}
 
-		else{
+		else {
 			int categoryId = categoryService.getCategoryId(category);
 			expense.setCategoryId(categoryId);
 			expenseService.addexpense(expense);
-			if(file!=null){
+			if (file != null) {
 				UploadImage image = new UploadImage();
 				image.setImage(file.getBytes());
 				image.setExpenseId(expense.getExpenseId());
@@ -339,21 +338,20 @@ public class TrackerController {
 			return "redirect:/newTracker";
 		}
 	}
-	
+
 	@SuppressWarnings("finally")
-	@RequestMapping(value = "/sendEmail" , method = RequestMethod.POST)
-	public String sendMail(@RequestParam("email") String mailTo){
+	@RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
+	public String sendMail(@RequestParam("email") String mailTo) {
 
 		String message = "Please Download your expense report";
 		try {
-			emailSender.sendEmailWithAttachments(mailTo,
-					"Expense Sheet", message);
+			emailSender.sendEmailWithAttachments(mailTo, "Expense Sheet", message);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-		finally{
+		finally {
 			return "redirect:/dashboard";
 		}
 	}

@@ -131,7 +131,67 @@ public class WriteExcel {
 
 	}
 
-	
+	public void writeYearAnalyticsChartOnExcel( String excelFilePath) throws IOException {
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("ChartWorkSheet");
+
+		HSSFCellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+		HSSFFont font = sheet.getWorkbook().createFont();
+		font.setBold(true);
+		font.setFontHeightInPoints((short) 18);
+		cellStyle.setFont(font);
+
+		HSSFRow row = sheet.createRow(0);
+		HSSFCell cellTitle = row.createCell(6);
+
+
+		cellTitle.setCellStyle(cellStyle);
+		cellTitle.setCellValue("Yearly Analytics");
+
+		writeAnalyticsImageOnexcel(workbook,sheet,"/PieChart.png",5,5,20,2,8);
+		writeAnalyticsImageOnexcel(workbook,sheet,"/BarChart.png",5,5,20,8,16);
+		writeAnalyticsImageOnexcel(workbook,sheet,"/MonthlyCategoryBarChart.png",10,20,35,1,16);
+		writeAnalyticsImageOnexcel(workbook,sheet,"/LineChart.png",20,35,55,1,16);
+
+
+
+		workbook.write(new FileOutputStream(excelFilePath));
+		workbook.close();
+	}
+
+	private void writeAnalyticsImageOnexcel(HSSFWorkbook workbook ,HSSFSheet sheet,String imagePath,int imageRow,int row1,int row2,int cell1,int cell2) throws IOException {
+		 InputStream inputStream = new FileInputStream(rootPath+imagePath);
+		   //Get the contents of an InputStream as a byte[].
+		   byte[] bytes = IOUtils.toByteArray(inputStream);
+		   //Adds a picture to the workbook
+		   int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+		   //close the input stream
+		   inputStream.close();
+		   //Returns an object that handles instantiating concrete classes
+		   CreationHelper helper = workbook.getCreationHelper();
+		   //Creates the top-level drawing patriarch.
+		   Drawing drawing = sheet.createDrawingPatriarch();
+
+		   //Create an anchor that is attached to the worksheet
+		   ClientAnchor anchor = helper.createClientAnchor();
+
+		   //create an anchor with upper left cell _and_ bottom right cell
+		   anchor.setCol1(cell1); //Column B
+		   anchor.setRow1(row1); //Row 3
+		   anchor.setCol2(cell2); //Column C
+		   anchor.setRow2(row2); //Row 4
+
+		   //Creates a picture
+		   Picture pict = drawing.createPicture(anchor, pictureIdx);
+
+		   //Reset the image to the original size
+		   //pict.resize(); //don't do that. Let the anchor resize the image!
+
+		   //Create the Cell B3
+		   HSSFCell cell11 = sheet.createRow(imageRow).createCell(1);
+	}
+
+
 	private void writeImageOnexcel(HSSFWorkbook workbook ,HSSFSheet sheet,String imagePath,int row,int cell) throws IOException {
 		 InputStream inputStream = new FileInputStream(rootPath+imagePath);
 		   //Get the contents of an InputStream as a byte[].
