@@ -9,3 +9,13 @@ sign_up_btn.addEventListener("click", () => {
 sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
+
+function validateForm() {
+let x = document.forms["regForm"]["password"].value;
+let y = document.forms["regForm"]["passwordConfirm"].value;
+	if (x!=y) {
+alert("Passwords doesn't match!!!");
+return false; }
+
+
+};
