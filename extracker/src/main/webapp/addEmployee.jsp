@@ -109,11 +109,9 @@
 		
 		
 		
-	
-										
-		
-		<tr><td><input type="submit" value="Add Employee" /></td></tr>
+
 	</table>
+		<input type="submit" value="Submit"  class="form-submit-button"/>
 	</form>
 
                 </div>

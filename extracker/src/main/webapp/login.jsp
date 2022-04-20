@@ -55,6 +55,7 @@
           
           <form name="regForm" action="${contextPath}/registration" method="POST" onsubmit="return validateForm()" class="sign-up-form">
             <h2 class="title">Sign up</h2>
+            <span style="color:red">${errorMessage}</span>
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input name="username" type="text" placeholder="Username" minlength="7" maxlength="32" title="Must contain minimum lenght 7 " required/>

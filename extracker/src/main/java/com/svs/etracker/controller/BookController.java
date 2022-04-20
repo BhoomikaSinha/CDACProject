@@ -30,8 +30,14 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@RequestMapping(value = "/book", method = RequestMethod.GET)
-	public String hello(Model model) {	
+	public String hello(Model model) {
+		
+		List<String> categories = categoryService.getOnlyCategories();
+		model.addAttribute("categories", categories);
 		return "book";
 	}
 

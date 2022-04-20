@@ -163,8 +163,6 @@ public class TrackerController {
 
 		pieChart.createGraphByDate(expenses);
 
-		// String excelFilePath =
-		// "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
 		writeExcel.writeExcel(expenses, excelFilePath);
 		System.out.println("Excel Report Success!!!!!!");
 
@@ -201,8 +199,7 @@ public class TrackerController {
 		pieChart.createGraphByDate(userExpenses);
 		Map<String, Double> pieData = expenseService.getPieDataByDate(fDate, tDate);
 		pieChart.createAndSavePieChart(pieData);
-
-		String excelFilePath = "/Users/govindram.sinha/LearningProject/Expense-Tracker-master/extracker/excel.xls";
+		
 		writeExcel.writeExcel(userExpenses, excelFilePath);
 		System.out.println("Excel Report Success!!!!!!");
 

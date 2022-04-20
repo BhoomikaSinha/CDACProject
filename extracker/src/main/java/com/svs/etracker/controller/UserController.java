@@ -33,10 +33,15 @@ public class UserController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-		userValidator.validate(userForm, bindingResult);
-
+		
 		if (bindingResult.hasErrors()) {
 			return "registration";
+		}
+		
+		User user = userService.findByUsername(userForm.getUsername());
+		if(user!=null) {
+			model.addAttribute("errorMessage", "Username Already Exists");
+			return "login";
 		}
 
 		userService.save(userForm);
@@ -54,6 +59,7 @@ public class UserController {
 		if (logout != null)
 			model.addAttribute("message", "You have been logged out successfully.");
 
+		//model.addAttribute("errorMessage", "");
 		return "login";
 	}
 

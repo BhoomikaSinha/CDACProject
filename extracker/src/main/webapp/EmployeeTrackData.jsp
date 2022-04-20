@@ -129,7 +129,7 @@
 										</select></td><td><input type="submit" value="Track" />     </td> </tr>
 </table>
 </form>
-
+<!--  
 <h3>Please upload the excel sheet</h3>
 <form method="POST" action="/uploadFile" enctype="multipart/form-data">
 <table>
@@ -149,7 +149,7 @@
 	<tr><td>Press here to upload the file!</td><td><input type="submit" value="Upload"></td></tr> 
 	
 	</form>	
-
+-->
 
 
                 </div>

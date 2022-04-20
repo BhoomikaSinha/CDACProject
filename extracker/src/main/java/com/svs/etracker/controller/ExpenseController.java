@@ -100,13 +100,13 @@ public class ExpenseController {
 		category.setCategory(newCategory);
 		categoryService.addCategory(category);
 
-		return "redirect:/expense";
+		return "redirect:/book";
 	}
 
 	@RequestMapping(value = "/deleteCategories", method = RequestMethod.POST)
 	public String deleteCategory(@RequestParam("deleteCategory") String deleteCategory) {
 		categoryService.deleteCategory(deleteCategory);
-		return "redirect:/expense";
+		return "redirect:/dashboard";
 	}
 
 	@RequestMapping(value = "/expenseSubmission", method = RequestMethod.POST)

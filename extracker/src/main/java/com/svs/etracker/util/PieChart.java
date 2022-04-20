@@ -98,8 +98,8 @@ public class PieChart {
 		}
 		
 	      JFreeChart lineChartObject = ChartFactory.createLineChart(
-	    	         "Daily Expenses","Amount",
-	    	         "Date",
+	    	         "Daily Expenses","Date",
+	    	         "Amount",
 	    	         dataset,PlotOrientation.VERTICAL,
 	    	         true,true,false);
 

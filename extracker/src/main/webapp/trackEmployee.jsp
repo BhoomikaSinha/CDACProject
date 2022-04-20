@@ -96,7 +96,7 @@
             <!-- Specific  Section -->   
             <div class="details"> 
                     <div class="cardHeader">
-                        <h2>Track Employee Expense</h2>
+                        <h2>Add Employee Expense</h2>
                     </div>
                 <div class="addExpenseForm">
 				   <form action="/employeeExpenseSubmission" method="post">
@@ -121,12 +121,10 @@
     											  </option>
  											 </c:forEach>
 										</select></td></tr>
-										
-										
-		
-		<tr><td><input type="submit" value="Submit" /></td></tr>
 	</table>
+		<input type="submit" value="Submit"  class="form-submit-button"/>
 	</form>
+
 
                 </div>
            </div>
